@@ -1,8 +1,8 @@
 from numpy import genfromtxt, uint8, float64
 import numpy as np
 
-def read_rating_matrix(path, delimeter=","):
-    return genfromtxt(path, delimeter=delimeter, dtype=uint8)
+def read_rating_matrix(path, delimiter=","):
+    return genfromtxt(path, delimiter=delimiter, dtype=uint8)
 
 """
 :param int max: the maximal value in matrix
