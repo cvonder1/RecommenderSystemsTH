@@ -17,7 +17,7 @@ def top_k(similarities, k):
     top_k = [(-1, -math.inf) for i in range(k)]
     for i in range(similarities.shape[0]):
         similarity = similarities[i]
-        if similarity is None:
+        if math.isnan(similarity):
             continue
         min_index = np.argmin(list(map(#in numpy notation: top_k[:,1]
             lambda pair: pair[1],
