@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-def top_k(similarities, k):
+def top_k(similarities, args):
     """Top k similarities
     Args:
         similarities (numpy.array): one dimensional array
