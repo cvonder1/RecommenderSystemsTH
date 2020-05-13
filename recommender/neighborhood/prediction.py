@@ -1,6 +1,18 @@
 import numpy as np
 
 def user_based(ratings, is_rated, element_index, similarity_function, neighborhood_selection):
+    """User-Based Neighborhood prediction for rating at element_index position
+    Args:
+        ratings (numpy.array): userxitem matrix
+        is_rated (numpy.array): userxitem boolean matrix
+        similarity_function: similarity function to be used
+            One of the functions found in recommender.neighborhood.similarity
+        neighborhood_selection: dict with function and parameters to be used for neighborhodd selection
+            e.g.: {
+                "function": recommender.selection.top_k,
+                "k": 3
+            }
+    """
     ratings, is_rated = _remove_rows_without_rating(ratings, is_rated, element_index)
     all_similarities = _all_similarities_with_rows(ratings, is_rated, element_index[0], similarity_function)
 
@@ -24,6 +36,18 @@ def user_based(ratings, is_rated, element_index, similarity_function, neighborho
     return sum_of_weighted_ratings / sum_of_similarities
 
 def item_based(ratings, is_rated, element_index, similarity_function, neighborhood_selection):
+    """Item-Based Neighborhood prediction for rating at element_index position
+    Args:
+        ratings (numpy.array): userxitem matrix
+        is_rated (numpy.array): userxitem boolean matrix
+        similarity_function: similarity function to be used
+            One of the functions found in recommender.neighborhood.similarity
+        neighborhood_selection: dict with function and parameters to be used for neighborhodd selection
+            e.g.: {
+                "function": recommender.selection.top_k,
+                "k": 3
+            }
+    """
     return user_based(ratings.T, is_rated.T, (element_index[1], element_index[0]), similarity_function, neighborhood_selection)
 
 def _all_similarities_with_rows(ratings, is_rated, row_index, similarity_function):
