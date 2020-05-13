@@ -23,6 +23,9 @@ def user_based(ratings, is_rated, element_index, similarity_function, neighborho
     # import pdb; pdb.set_trace()
     return sum_of_weighted_ratings / sum_of_similarities
 
+def item_based(ratings, is_rated, element_index, similarity_function, neighborhood_selection):
+    return user_based(ratings.T, is_rated.T, (element_index[1], element_index[0]), similarity_function, neighborhood_selection)
+
 def _all_similarities_with_rows(ratings, is_rated, row_index, similarity_function):
     """Similarities with all other rows with row given by row_index
     Args:
