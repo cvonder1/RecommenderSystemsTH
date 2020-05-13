@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def user_based(ratings, is_rated, element_index, similarity_function, neighborhood_selection):
     ratings, is_rated = _remove_rows_without_rating(ratings, is_rated, element_index)
     all_similarities = _all_similarities_with_rows(ratings, is_rated, element_index[0], similarity_function)
@@ -10,15 +9,18 @@ def user_based(ratings, is_rated, element_index, similarity_function, neighborho
     del neighborhood_selection_args["function"]
     neighborhood_indices = neighborhood_selection_function(all_similarities, neighborhood_selection_args)
 
-    sum_of_weighted_ratings = 0
-    for row in neighborhood_indices:
-        sum_of_weighted_ratings += ratings[row, element_index[1]] * all_similarities[row]
+    sum_of_weighted_ratings = sum(
+        map(
+            lambda row_index: ratings[row_index, element_index[1]] * all_similarities[row_index],
+            neighborhood_indices
+        )
+    )
 
-    sum_of_similarities = 0
-    for row in neighborhood_indices:
-        sum_of_similarities += all_similarities[row]
+    sum_of_similarities = sum(
+        all_similarities[neighborhood_indices]
+    )
 
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     return sum_of_weighted_ratings / sum_of_similarities
 
 def _all_similarities_with_rows(ratings, is_rated, row_index, similarity_function):
